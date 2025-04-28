@@ -8,10 +8,8 @@ from fpdf.enums import XPos, YPos
 app = Flask(__name__)
 app.secret_key = 'hola'  # Super necesario para las sesiones si 
 DIRECTORIO_REPORTES = os.path.abspath('reportes') # NOMBRE DE LA CARPETA 
-db_host = 'localhost'
-db_user = 'root'
-db_password = ''
-db_name = 'inventario_de_equipos_tecnologicos'
+db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta donde esté tu .db
+conexion_db = ConexionBaseDatos(db_path)
 
 @app.route('/')
 def inicio():
