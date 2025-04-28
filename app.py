@@ -10,7 +10,6 @@ app.secret_key = 'hola'  # Super necesario para las sesiones si
 DIRECTORIO_REPORTES = os.path.abspath('reportes') # NOMBRE DE LA CARPETA 
 db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta donde esté tu .db
 conexion_db = ConexionBaseDatos(db_path)
-
 @app.route('/')
 def inicio():
     var1 = True
@@ -21,8 +20,8 @@ def verificarusuario():
     usuario = request.form['usuario']
     contrasena = request.form['contrasena']
     tipo_user = request.form['tipo_user']
-
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     # Nuevas consultas de conteo
     total_usuarios = conexion_db.consultar_datos("SELECT COUNT(*) AS total FROM login")[0]['total']
@@ -68,9 +67,9 @@ def home():
   
 
     var2 = True
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
-
     # Mantener tu consulta original
     consulta = "SELECT * FROM departamento"
     departamentos = conexion_db.consultar_datos(consulta)
@@ -104,7 +103,8 @@ class departamento:
 def dpt():
     if 'user_id' not in session:
         return redirect('/')
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "SELECT * FROM departamento"
     departamentos = conexion_db.consultar_datos(consulta)
@@ -124,7 +124,8 @@ def registrar_departamento():
     tipo_de_trabajo = request.form['tipo_de_trabajo']
     encargado = request.form['encargado']
 
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "INSERT INTO departamento (nombre_dep, tipo_de_trabajo, encargado) VALUES (%s, %s, %s)"
     valores = (nombre_dep, tipo_de_trabajo, encargado)
@@ -143,7 +144,8 @@ def modificar_departamento(id_departamento):
     encargado = request.form['encargado']
     
     
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+     db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "UPDATE departamento SET nombre_dep=%s, tipo_de_trabajo=%s, encargado=%s WHERE id_departamento=%s"
     valores = (nombre_dep, tipo_de_trabajo, encargado, id_departamento)
@@ -160,7 +162,8 @@ def eliminar_departamento(id_departamento):
         return "No tienes permisos para eliminar este dato", 403  # Retornar un mensaje si no tiene permisos
 
     
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "DELETE FROM departamento WHERE id_departamento=%s"
     valores = (id_departamento,)
@@ -189,7 +192,8 @@ def equipos():
     if 'user_id' not in session:
         return redirect('/')
     id_departamento = session.get('id_departamento')  # Obtener el departamento seleccionado
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
 
     if id_departamento:  # Filtrar por departamento seleccionado
@@ -245,9 +249,9 @@ def registrar_inventario():
 
     try:
       
-        conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
-        conexion_db.conectar()
-
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
+    conexion_db.conectar()
        
         consulta = """
             INSERT INTO inventario 
@@ -284,7 +288,8 @@ def modificar_inventario(id_equipos):
     
    
     
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "UPDATE inventario SET nombre_pc=%s, mac_placa=%s, fuentes_de_poder=%s, disco_duro=%s, procesador=%s, ram=%s, fecha_ingreso=%s, estado=%s WHERE id_equipos=%s"
     valores = (nombre_pc, mac_placa, fuentes_de_poder, disco_duro, procesador, ram, fecha_ingreso, estado, id_equipos)
@@ -297,7 +302,8 @@ def modificar_inventario(id_equipos):
 def eliminar_inventario(id_equipos ):
     if session.get('tipo_user') != 'Administrador':  # Verificar si el usuario es admin
         return "No tienes permisos para eliminar este dato", 403  # Retornar un mensaje si no tiene permisos
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "DELETE FROM inventario WHERE id_equipos=%s"
     valores = (id_equipos,)
@@ -331,9 +337,9 @@ def registrar_inventario_otro():
 
     try:
       
-        conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
-        conexion_db.conectar()
-
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
+    conexion_db.conectar()
        
         consulta = """
             INSERT INTO otros 
@@ -364,8 +370,8 @@ def modificar_otros(idotros):
     descripcion_otros = request.form['descripcion_otros']
     
    
-    
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "UPDATE otros SET nombre_otros=%s, fecha_ingreso_otros=%s, estado_otros=%s, descripcion_otros=%s WHERE idotros=%s"
     valores = (nombre_otros, fecha_ingreso_otros, estado_otros, descripcion_otros, idotros)
@@ -378,7 +384,8 @@ def modificar_otros(idotros):
 def eliminar_otros(idotros ):
     if session.get('tipo_user') != 'Administrador':  # Verificar si el usuario es admin
         return "No tienes permisos para eliminar este dato", 403  # Retornar un mensaje si no tiene permisos
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "DELETE FROM otros WHERE idotros=%s"
     valores = (idotros,)
@@ -403,7 +410,8 @@ class user:
 def usuarios():
     if 'user_id' not in session:
         return redirect('/') 
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     
     consulta_logins = """
@@ -439,7 +447,8 @@ def registrar_user():
     avatar = request.form['avatar']  # Avatar seleccionado
 
     # Insertar en la tabla `login`
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     
     consulta_login = """INSERT INTO login (usuario, contrasena, tipo_user, avatar) 
@@ -464,7 +473,8 @@ def modificar_user(id_usuario):
     
    
     
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "UPDATE login SET usuario=%s, contrasena=%s, tipo_user=%s WHERE id_usuario=%s"
     valores = (usuario, contrasena, tipo_user,  id_usuario)
@@ -477,7 +487,8 @@ def modificar_user(id_usuario):
 def eliminar_user(id_usuario ):
     if session.get('tipo_user') != 'Administrador':  # Verificar si el usuario es admin
         return "No tienes permisos para eliminar este dato", 403  # Retornar un mensaje si no tiene permisos
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
     consulta = "DELETE FROM login WHERE id_usuario=%s"
     valores = (id_usuario,)
@@ -495,7 +506,8 @@ def reporte():
     if 'user_id' not in session:
         return redirect('/')
     var6 = True
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
 
     # Consulta para obtener todos los departamentos
@@ -524,9 +536,9 @@ def crear_reporte():
         # Obtener el ID del usuario de la sesión
         
         # Conectar a la base de datos
-        conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
-        conexion_db.conectar()
-        
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
+    conexion_db.conectar()
         # Consultar el nombre del departamento
         consulta_departamento = """SELECT nombre_dep FROM departamento WHERE id_departamento = %s"""
         depart = conexion_db.consultar_datos(consulta_departamento, (id_departamento,))
@@ -668,8 +680,9 @@ def crear_reporte():
     
     else:
         # Consultar los departamentos de base de datos
-        conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
-        conexion_db.conectar()
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
+    conexion_db.conectar()
         consulta_departamentos = "SELECT id_departamento, nombre_dep FROM departamento"
         departamentos = conexion_db.consultar_datos(consulta_departamentos)
         conexion_db.cerrar_conexion()
@@ -696,7 +709,8 @@ def reporte_global():
         return jsonify({'error': 'No tiene permisos para registrar un departamento'}), 403
 
     # Conectar a la base de datos
-    conexion_db = ConexionBaseDatos(db_host, db_user, db_password, db_name)
+    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
+    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
     conexion_db.conectar()
      # Obtener el ID del usuario actual desde la sesión
     id_usuario = session.get('user_id')
