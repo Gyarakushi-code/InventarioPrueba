@@ -14,45 +14,27 @@ conexion_db = ConexionBaseDatos(db_path)
 def inicio():
     var1 = True
     return render_template('home.html', var1=True)
-
 @app.route('/login', methods=['POST'])
 def verificarusuario():
+    db_path = 'Inventario_de_equipos_tecnico.db'
+    conexion_db = ConexionBaseDatos(db_path)
+    conexion_db.conectar()
+    
     usuario = request.form['usuario']
     contrasena = request.form['contrasena']
     tipo_user = request.form['tipo_user']
-    db_path = 'Inventario_de_equipos_tecnico.db'  # o la ruta correcta dentro de tu proyecto
-    conexion_db = ConexionBaseDatos(db_path)      # SOLAMENTE pasas el db_path
-    conexion_db.conectar()
-    # Nuevas consultas de conteo
-    total_usuarios = conexion_db.consultar_datos("SELECT COUNT(*) AS total FROM login")[0]['total']
-    total_admins = conexion_db.consultar_datos("SELECT COUNT(*) AS total FROM login WHERE tipo_user = 'Administrador'")[0]['total']
-    total_computadoras = conexion_db.consultar_datos("SELECT COUNT(*) AS total FROM inventario")[0]['total']
-    total_otros = conexion_db.consultar_datos("SELECT COUNT(*) AS total FROM otros")[0]['total']
-    consulta = """
-        SELECT * 
-        FROM login 
-        WHERE usuario = %s AND contrasena = %s AND tipo_user = %s
-    """
-    resultados = conexion_db.consultar_datos(consulta, (usuario, contrasena, tipo_user))
 
-    consulta_departamentos = "SELECT * FROM departamento"
-    departamentos = conexion_db.consultar_datos(consulta_departamentos)
-    conexion_db.cerrar_conexion()
+    consulta = "SELECT * FROM login WHERE usuario = %s AND contrasena = %s AND tipo_user = %s"
+    valores = (usuario, contrasena, tipo_user)
+    resultado = conexion_db.consultar_datos(consulta, valores)
 
-    if resultados:
-        usuario_activo = resultados[0]
-        session['user_id'] = usuario_activo['id_usuario']
-        session['username'] = usuario_activo['usuario']
-        session['tipo_user'] = usuario_activo['tipo_user']
-        session['avatar'] = usuario_activo.get('avatar', 'avatar-male.png')
-
-        return render_template('home.html', var2=True, departamentos=departamentos, usuario_activo=usuario_activo,total_usuarios=total_usuarios,
-        total_admins=total_admins,
-        total_computadoras=total_computadoras,
-        total_otros=total_otros)
+    if resultado:
+        session['username'] = usuario
+        session['tipo_user'] = tipo_user
+        return redirect(url_for('home'))
     else:
-        flash("Usuario o contraseña incorrectos. Inténtalo de nuevo.", "error")
-        return redirect('/')
+        flash('Usuario o contraseña incorrectos')
+        return redirect(url_for('index'))
     
 @app.route('/logout')
 def logout():
