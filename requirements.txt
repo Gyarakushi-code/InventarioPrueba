@@ -1,0 +1,5 @@
+Flask==2.2.5
+PyMySQL==1.1.0
+fpdf2==2.7.6
+gunicorn
+mysql-connector-python
