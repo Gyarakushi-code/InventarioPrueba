@@ -1,0 +1,2752 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div id="app"></div>
+{% if var1 %}
+<!-- HOME -->
+<div class="container-login">
+	{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div style="color: red; text-align: center; font-weight: bold;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    <p class="text-center" style="font-size: 80px;">
+        <i class="zmdi zmdi-account-circle"></i>
+    </p>
+    <p class="text-center text-condensedLight">Iniciar sesión con su cuenta</p>
+    <form action="/login" method="post">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="usuario" name="usuario" maxlength="50" required>
+            <label class="mdl-textfield__label" for="usuario">Nombre de Usuario</label>
+        </div>
+
+        <label for="tipo_user">Tipo de Usuario:</label>
+        <select id="tipo_user" name="tipo_user" required>
+            <option value="Administrador">Administrador</option>
+            <option value="Invitado">Invitado</option>
+        </select><br><br>
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="password" id="contrasena" name="contrasena" maxlength="50" required>
+            <label class="mdl-textfield__label" for="contrasena">Contraseña</label>
+        </div>
+
+        <button id="SingIn" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">
+            Iniciar Sesión<i class="zmdi zmdi-mail-send"></i>
+        </button>
+    </form>
+</div>
+<footer style="width: 100%; background-color: #3F51B5; padding: 10px 0; text-align: center; position: fixed; bottom: 0; font-size: 14px; color: #FFFFFF; font-weight: bold;">
+    © 2025 Jesús Leonardo Almenar Yepez. Todos los derechos reservados.
+</footer>
+{% elif var2 %}
+<!-- INDEX -->
+    <!-- Notifications area -->
+    <section class="full-width container-notifications">
+        <div class="full-width container-notifications-bg btn-Notification"></div>
+        <section class="NotificationArea">
+            <div class="full-width text-center NotificationArea-title tittles">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+            <a href="#" class="Notification" id="notifation-unread-1">
+                <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle"></i>
+                        <strong>New User Registration</strong> 
+                        <br>
+                        <small>Just Now</small>
+                    </p>
+                </div>
+                <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">Notification as UnRead</div> 
+            </a>
+            <a href="#" class="Notification" id="notifation-read-1">
+                <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o"></i>
+                        <strong>New Updates</strong> 
+                        <br>
+                        <small>30 Mins Ago</small>
+                    </p>
+                </div>
+                <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">Notification as Read</div>
+            </a>
+            <a href="#" class="Notification" id="notifation-unread-2">
+                <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle"></i>
+                        <strong>Archive uploaded</strong> 
+                        <br>
+                        <small>31 Mins Ago</small>
+                    </p>
+                </div>
+                <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">Notification as UnRead</div>
+            </a> 
+            <a href="#" class="Notification" id="notifation-read-2">
+                <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o"></i>
+                        <strong>New Mail</strong> 
+                        <br>
+                        <small>37 Mins Ago</small>
+                    </p>
+                </div>
+                <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">Notification as Read</div>
+            </a>
+            <a href="#" class="Notification" id="notifation-read-3">
+                <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+                <div class="Notification-text">
+                    <p>
+                        <i class="zmdi zmdi-circle-o"></i>
+                        <strong>Folder delete</strong> 
+                        <br>
+                        <small>1 hours Ago</small>
+                    </p>
+                </div>
+                <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">Notification as Read</div>
+            </a>  
+        </section>
+    </section>
+    <!-- navBar -->
+    <div class="full-width navBar">
+        <div class="full-width navBar-options">
+            <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>    
+            <div class="mdl-tooltip" for="btn-menu">Menu</div>
+            <nav class="navBar-options-list">
+                <ul class="list-unstyle">
+<!--
+<li class="btn-Notification" id="notifications">
+    <i class="zmdi zmdi-notifications"></i>
+    <div class="mdl-tooltip" for="notifications">Notifications</div>
+</li>
+-->
+<button id="btn-logout" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: transparent; border: none;">
+	<i class="zmdi zmdi-power" style="color: white;"></i>
+	<div class="mdl-tooltip" for="btn-logout">Cerrar Sesión</div>
+</button>
+
+					<li class="text-condensedLight noLink">
+						<small>{{ session['username'] }}</small>
+					</li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='assets/img/' + session.get('avatar', 'avatar-male.png')) }}" alt="Avatar" class="img-responsive">
+						</figure>
+					</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> IET
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='assets/img/' + session['avatar']) }}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						{{ session['username'] }}<br>
+						<small>{{ session['tipo_user'] }}</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; DASHBOARD</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="/home" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								HOGAR
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-case"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PUESTOS DE TRABAJO
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+						
+							<li class="full-width">
+								<a href="/dpt" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR PUESTO DE TRABAJO
+									</div>
+								</a>
+							</li>
+							{% for departamento in departamentos %}
+							<li class="full-width department-item" data-id="{{ departamento['id_departamento'] }}">
+								
+								<a href="{{ url_for('seleccionar_departamento', id_departamento=departamento.id_departamento) }}" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-desktop-windows"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										{{ departamento.nombre_dep }}
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						
+					</li>
+					{% if session.get('tipo_user') == 'Administrador' %}
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet ">
+								USUARIOS
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+							<li class="full-width">
+								<a href="/user" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-account"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR USUARIOS
+									</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% endif %}
+                    <li class="full-width">
+                        <a href="/reporte" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-file-text"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                REPORTE
+                            </div>
+                        </a>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <section class="full-width text-center" style="padding: 30px 0;">
+      <h3 class="text-center tittles">BIENVENIDO,</h3>
+	  <h3 class="text-center" style="font-weight: bold; margin-top: 10px;">INVENTARIO EQUIPOS TECNOLÓGICOS</h3>
+  
+      <div style="
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 1300px;
+      margin: 50px auto;
+    ">
+  
+<!-- Usuarios -->
+<article class="tile" style="width: 100%;">
+	<div class="tile-text">
+	  <span class="text-condensedLight">
+		{{ total_usuarios }}<br>
+		<small>Usuarios</small>
+	  </span>
+	</div>
+	<i class="zmdi zmdi-accounts tile-icon"></i>
+  </article>
+  
+  <!-- Administradores -->
+  <article class="tile" style="width: 100%;">
+	<div class="tile-text">
+	  <span class="text-condensedLight">
+		{{ total_admins }}<br>
+		<small>Administradores</small>
+	  </span>
+	</div>
+	<i class="zmdi zmdi-account tile-icon"></i>
+  </article>
+  
+  <!-- Computadoras -->
+  <article class="tile" style="width: 100%;">
+	<div class="tile-text">
+	  <span class="text-condensedLight">
+		{{ total_computadoras }}<br>
+		<small>Computadoras</small>
+	  </span>
+	</div>
+	<i class="zmdi zmdi-desktop-windows tile-icon"></i>
+  </article>
+  
+  <!-- Otros -->
+  <article class="tile" style="width: 100%;">
+	<div class="tile-text">
+	  <span class="text-condensedLight">
+		{{ total_otros }}<br>
+		<small>Otros</small>
+	  </span>
+	</div>
+	<i class="zmdi zmdi-tv-alt-play tile-icon"></i>
+  </article>
+  
+      </div>
+
+	  <div style="max-width: 600px; margin: 50px auto;">
+		<canvas id="graficoBarras"></canvas>
+	</div>
+    </section>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+  const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
+  const graficoBarras = new Chart(ctxBarras, {
+	  type: 'bar',
+	  data: {
+		  labels: ['Usuarios', 'Administradores', 'Computadoras', 'Otros'],
+		  datasets: [{
+			  label: 'Cantidad',
+			  data: [5, 3, 3, 2], // <-- Aquí tus datos reales dinámicos luego
+			  backgroundColor: [
+				  '#3F51B5', '#FF9800', '#4CAF50', '#E91E63'
+			  ],
+			  borderColor: [
+				  '#303F9F', '#F57C00', '#388E3C', '#C2185B'
+			  ],
+			  borderWidth: 1
+		  }]
+	  },
+	  options: {
+		  responsive: true,
+		  scales: {
+			  y: {
+				  beginAtZero: true,
+				  ticks: {
+					  stepSize: 1
+				  }
+			  }
+		  },
+		  plugins: {
+			  legend: {
+				  display: false
+			  }
+		  }
+	  }
+  });
+  </script>
+
+	{% elif var3 %}
+    <!-- ADMIN -->
+	<!-- Notifications area -->
+	<section class="full-width container-notifications">
+		<div class="full-width container-notifications-bg btn-Notification"></div>
+	    <section class="NotificationArea">
+	        <div class="full-width text-center NotificationArea-title tittles">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+	        <a href="#" class="Notification" id="notifation-unread-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>New User Registration</strong> 
+	                    <br>
+	                    <small>Just Now</small>
+	                </p>
+	            </div>
+	        	<div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">Notification as UnRead</div> 
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Updates</strong> 
+	                    <br>
+	                    <small>30 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-unread-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>Archive uploaded</strong> 
+	                    <br>
+	                    <small>31 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">Notification as UnRead</div>
+	        </a> 
+	        <a href="#" class="Notification" id="notifation-read-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Mail</strong> 
+	                    <br>
+	                    <small>37 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-3">
+	            <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>Folder delete</strong> 
+	                    <br>
+	                    <small>1 hours Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">Notification as Read</div>
+	        </a>  
+	    </section>
+	</section>
+	<!-- navBar -->
+	<div class="full-width navBar">
+		<div class="full-width navBar-options">
+			<i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>	
+			<div class="mdl-tooltip" for="btn-menu">Menu</div>
+			<nav class="navBar-options-list">
+				<ul class="list-unstyle">
+<!--
+<li class="btn-Notification" id="notifications">
+    <i class="zmdi zmdi-notifications"></i>
+    <div class="mdl-tooltip" for="notifications">Notifications</div>
+</li>
+-->
+<button id="btn-logout" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: transparent; border: none;">
+	<i class="zmdi zmdi-power" style="color: white;"></i>
+	<div class="mdl-tooltip" for="btn-logout">Cerrar Sesión</div>
+</button>
+					<li class="text-condensedLight noLink">
+						<small>{{ session['username'] }}</small>
+					</li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='assets/img/' + session.get('avatar', 'avatar-male.png')) }}" alt="Avatar" class="img-responsive">
+						</figure>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> IET
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='assets/img/' + session['avatar']) }}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						{{ session['username'] }}<br>
+						<small>{{ session['tipo_user'] }}</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; DASHBOARD</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="/home" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								HOGAR
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-case"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PUESTOS DE TRABAJO
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+						
+							<li class="full-width">
+								<a href="/dpt" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR PUESTO DE TRABAJO
+									</div>
+								</a>
+							</li>
+							{% for departamento in departamentos %}
+							<li class="full-width department-item" data-id="{{ departamento['id_departamento'] }}">
+								
+								<a href="{{ url_for('seleccionar_departamento', id_departamento=departamento.id_departamento) }}" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-desktop-windows"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										{{ departamento.nombre_dep }}
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						
+					</li>
+					{% if session.get('tipo_user') == 'Administrador' %}
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet ">
+								USUARIOS
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+							<li class="full-width">
+								<a href="/user" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-account"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR USUARIOS
+									</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% endif %}
+                    <li class="full-width">
+                        <a href="/reporte" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-file-text"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                REPORTE
+                            </div>
+                        </a>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<section class="full-width header-well">
+			<div class="full-width header-well-icon">
+				<i class="zmdi zmdi-account"></i>
+			</div>
+			<div class="full-width header-well-text">
+				<p class="text-condensedLight">
+					Bienvenido al panel de gestión de usuarios. Aquí puede agregar nuevos administradores e invitados, establecer sus credenciales y personalizar su avatar.
+				</p>
+			</div>
+		</section>
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+		
+        <a href="#tabNewAdmin" class="mdl-tabs__tab is-active ">Registrar</a>
+
+        <a href="#tabListAdmin" class="mdl-tabs__tab ">Lista</a>
+    </div>
+
+<!-- Sección para Nuevo Usuario -->
+<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+            <div class="full-width panel mdl-shadow--2dp">
+                <div class="full-width panel-tittle bg-primary text-center tittles">
+                    Registrar Usuario
+                </div>
+                <div class="full-width panel-content">
+                    <form action="/registrar_user" method="post" id="formRegistrarUsuarios" class="form-registrar-usuario">
+						<h5 class="text-condensedLight">Cuenta</h5>
+					
+						<!-- Tipo de cuenta -->
+						<div style="margin-bottom: 20px;">
+							<label for="tipoCuenta"><strong>Tipo de Cuenta:</strong></label>
+							<select id="tipoCuenta" name="tipo_user" class="mdl-textfield__input" required>
+								<option value="" disabled selected>Seleccione</option>
+								<option value="Administrador">Administrador</option>
+								<option value="Invitado">Invitado</option>
+							</select>
+						</div>
+					
+						<!-- Usuario -->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="UserNameAdmin" name="usuario" maxlength="20" required>
+							<label class="mdl-textfield__label" for="UserNameAdmin">Usuario</label>
+						</div>
+					
+						<!-- Contraseña -->
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="password" id="passwordAdmin" name="contrasena" maxlength="25" required>
+							<label class="mdl-textfield__label" for="passwordAdmin">Contraseña</label>
+						</div>
+					
+						<h5 class="text-condensedLight">Choose Avatar</h5>
+					
+						<!-- Avatares -->
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+							<input type="radio" id="option-1" class="mdl-radio__button" name="avatar" value="avatar-male.png" required>
+							<img src="static/assets/img/avatar-male.png" alt="avatar" style="height: 45px; width: 45px;">
+							<span class="mdl-radio__label">Avatar 1</span>
+						</label>
+						<br><br>
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+							<input type="radio" id="option-2" class="mdl-radio__button" name="avatar" value="avatar-female.png">
+							<img src="static/assets/img/avatar-female.png" alt="avatar" style="height: 45px; width: 45px;">
+							<span class="mdl-radio__label">Avatar 2</span>
+						</label>
+						<br><br>
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
+							<input type="radio" id="option-3" class="mdl-radio__button" name="avatar" value="avatar-male2.png">
+							<img src="static/assets/img/avatar-male2.png" alt="avatar" style="height: 45px; width: 45px;">
+							<span class="mdl-radio__label">Avatar 3</span>
+						</label>
+						<br><br>
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-4">
+							<input type="radio" id="option-4" class="mdl-radio__button" name="avatar" value="avatar-female2.png">
+							<img src="static/assets/img/avatar-female2.png" alt="avatar" style="height: 45px; width: 45px;">
+							<span class="mdl-radio__label">Avatar 4</span>
+						</label>
+					
+						<!-- Botón -->
+						<p class="text-center">
+							<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btnUsuario">
+								<i class="zmdi zmdi-plus"></i>
+							</button>
+						</p>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <!-- Sección de Lista (List) -->
+<div class="mdl-tabs__panel" id="tabListAdmin">
+    <div class="full-width panel mdl-shadow--2dp">
+        <div class="full-width panel-tittle bg-success text-center tittles">
+            Lista de Usuarios
+        </div>
+        <style>.bg-success {background-color: #2A6F97 !important;}</style>
+
+        <div class="full-width panel-content">
+
+
+    <!-- Ordenar por -->
+    <div>
+        <label for="ordenarSelect" style="margin-right: 10px;"><strong>Ordenar por:</strong></label>
+        <select id="ordenarSelect" class="mdl-textfield__input">
+            <option value="nombre">Nombre</option>
+            <option value="rol">Rol</option>
+        </select>
+    </div>
+</div>
+
+            <!-- Tabla de Administradores -->
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Nombre</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+						{% for login in logins %}
+									<tr>
+										<td>{{ login['usuario'] }}</td>
+										<td>{{ login['tipo_user'] }}</td>
+										<td>
+                        
+											<td>
+												<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored btn-modificar {{ 'ocultar-boton' if session.get('tipo_user') != 'Administrador' else '' }}"
+														data-usuario-id="{{ login['id_usuario'] }}"
+														style="background-color: #2a972a; color: white;">Modificar</button>
+												
+												<form class="form-eliminar" action="/eliminar_user/{{ login['id_usuario'] }}" method="post" id="form-eliminar-{{ login['id_usuario'] }}">
+													<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored {{ 'ocultar-boton' if session.get('tipo_user') != 'Administrador' else '' }}" 
+															style="background-color: rgb(202, 30, 30); color: white;" data-usuario-id="{{ login['id_usuario'] }}">
+														Eliminar
+													</button>
+												</form>
+											</td>
+											
+											<tr id="formulario-modificacion-{{ login['id_usuario'] }}" style="display: none;">
+												<td colspan="4">
+													<div class="full-width panel-content">
+														<form action="/modificar_user/{{ login['id_usuario']}}" method="post" class="form-modificar-usuario">
+															<h5 class="text-condensedLight"><strong><center>DATOS</center></strong></h5>
+															<div style="margin-bottom: 20px;">
+																<label for="tipoCuenta"><strong>Tipo de Cuenta:</strong></label>
+																<select id="tipoCuenta" name="tipo_user" class="mdl-textfield__input" required>
+																	<option value="" disabled selected>Seleccione</option>
+																	<option value="Administrador"{% if login['tipo_user'] == 'Administrador' %}selected{% endif %}>Administrador</option>
+																	<option value="Invitado"{% if login['tipo_user'] == 'Invitado' %}selected{% endif %}>Invitado</option>
+																</select>
+															</div>
+															<br>
+															<!-- Usuario -->
+															<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+																<input class="mdl-textfield__input" type="text" id="UserNameAdmin" name="usuario" value="{{ login['usuario'] }}" maxlength="20" required>
+																<label class="mdl-textfield__label" for="UserNameAdmin">Usuario</label>
+															</div>
+															<br>
+															<!-- Contraseña -->
+															<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+																<input class="mdl-textfield__input" type="password" id="passwordAdmin" name="contrasena" maxlength="25" required>
+																<label class="mdl-textfield__label" for="passwordAdmin">Contraseña</label>
+															</div>
+															<!-- Botón -->
+															<p class="text-center">
+																<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btnUsuarioModificar">
+																	<i class="zmdi zmdi-plus"></i>
+																</button>
+															</p>
+														</form>
+													</div>
+												</td>
+											</tr>
+					{% endfor %}
+                </tbody>
+				
+            </table>
+        </div>
+    </div>
+</div>
+
+	</section>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const ordenarSelect = document.getElementById('ordenarSelect');
+			const tbody = document.querySelector('tbody'); // El cuerpo de la tabla
+			const filas = Array.from(tbody.getElementsByTagName('tr'));
+		
+			ordenarSelect.addEventListener('change', function() {
+				const criterio = ordenarSelect.value;
+		
+				filas.sort((a, b) => {
+					const valorA = a.querySelector(`td:nth-child(${criterio === 'nombre' ? 1 : 2})`).textContent.trim().toLowerCase();
+					const valorB = b.querySelector(`td:nth-child(${criterio === 'nombre' ? 1 : 2})`).textContent.trim().toLowerCase();
+		
+					if (valorA < valorB) return -1;
+					if (valorA > valorB) return 1;
+					return 0;
+				});
+		
+				filas.forEach(fila => tbody.appendChild(fila));
+			});
+		});
+		</script>
+	<script>
+		// Verificamos si el usuario es admin o no cuando intenten enviar el formulario
+		document.getElementById('formRegistrarUsuarios').addEventListener('submit', function(event) {
+			var tipo_user = "{{ session['tipo_user'] }}";  // Obtenemos el tipo de usuario de la sesión
+		
+			if (tipo_user !== 'Administrador') {
+				event.preventDefault();  // Prevenimos el envío del formulario
+				alert('No tienes permisos para registrar un usuario.');  // Mostramos el mensaje
+			}
+		});
+		</script>
+	<script>
+	
+	
+  // Manejo del botón de 'Eliminar' con SweetAlert
+var botonesEliminar = document.querySelectorAll('.form-eliminar button');
+botonesEliminar.forEach(function(boton) {
+    boton.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevenimos el envío inmediato del formulario
+
+        var usuarioID = this.getAttribute('data-usuario-id'); // Obtenemos el ID del usuario
+        var formularioEliminar = document.getElementById('form-eliminar-' + usuarioID); // Formulario correspondiente
+
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¿Este Usuario será eliminado permanentemente?",
+            icon: "warning",
+            showCancelButton: true,
+			confirmButtonColor: '#d33',  // Color rojo para confirmar
+            cancelButtonColor: '#3085d6',  // Color azul para cancelar
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, enviamos el formulario para eliminar al usuario
+                formularioEliminar.submit();
+
+                // Mostramos el mensaje de éxito después de eliminar
+                Swal.fire({
+                    title: "¡Eliminado!",
+                    text: "El usuario ha sido eliminado con éxito.",
+                    icon: "success",
+                    confirmButtonText: "Aceptar"
+                }).then(() => {
+                    // Eliminar la fila de la tabla
+                    this.closest('tr').remove();
+                });
+            }
+        });
+    });
+});
+
+
+		</script>
+
+<script>
+	// Función para manejar el evento de modificación con SweetAlert
+	document.querySelectorAll('.btn-modificar').forEach(function(boton) {
+		boton.addEventListener('click', function(event) {
+			var usuarioID = this.getAttribute('data-usuario-id');
+			var formularioModificacion = document.getElementById('formulario-modificacion-' + usuarioID);
+			
+			// Mostrar formulario de modificación
+			formularioModificacion.style.display = 
+				formularioModificacion.style.display === 'none' || formularioModificacion.style.display === '' ? 'table-row' : 'none';
+		});
+	});
+	
+	// Función para manejar el mensaje de éxito y luego enviar el formulario para la modificación de usuario
+	document.querySelectorAll('.form-modificar-usuario').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su usuario se ha modificado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	
+	document.querySelectorAll('.form-registrar-usuario').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su usuario se ha modificado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	</script>
+
+
+<style>
+	.mdl-data-table td {
+	text-align: left; 
+}
+
+.mdl-data-table th {
+	text-align: left; 
+}
+</style>
+    {% elif var4 %}
+	<!-- PUESTO DE TRABAJO -->
+	<!-- Notifications area -->
+	<section class="full-width container-notifications">
+		<div class="full-width container-notifications-bg btn-Notification"></div>
+	    <section class="NotificationArea">
+	        <div class="full-width text-center NotificationArea-title tittles">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+	        <a href="#" class="Notification" id="notifation-unread-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>New User Registration</strong> 
+	                    <br>
+	                    <small>Just Now</small>
+	                </p>
+	            </div>
+	        	<div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">Notification as UnRead</div> 
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Updates</strong> 
+	                    <br>
+	                    <small>30 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-unread-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>Archive uploaded</strong> 
+	                    <br>
+	                    <small>31 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">Notification as UnRead</div>
+	        </a> 
+	        <a href="#" class="Notification" id="notifation-read-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Mail</strong> 
+	                    <br>
+	                    <small>37 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-3">
+	            <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>Folder delete</strong> 
+	                    <br>
+	                    <small>1 hours Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">Notification as Read</div>
+	        </a>  
+	    </section>
+	</section>
+	<!-- navBar -->
+	<div class="full-width navBar">
+		<div class="full-width navBar-options">
+			<i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>	
+			<div class="mdl-tooltip" for="btn-menu">Menu</div>
+			<nav class="navBar-options-list">
+				<ul class="list-unstyle">
+<!--
+<li class="btn-Notification" id="notifications">
+    <i class="zmdi zmdi-notifications"></i>
+    <div class="mdl-tooltip" for="notifications">Notifications</div>
+</li>
+-->
+<button id="btn-logout" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: transparent; border: none;">
+	<i class="zmdi zmdi-power" style="color: white;"></i>
+	<div class="mdl-tooltip" for="btn-logout">Cerrar Sesión</div>
+</button>
+					<li class="text-condensedLight noLink">
+						<small>{{ session['username'] }}</small>
+					</li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='assets/img/' + session.get('avatar', 'avatar-male.png')) }}" alt="Avatar" class="img-responsive">
+						</figure>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> IET
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='assets/img/' + session['avatar']) }}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						{{ session['username'] }}<br>
+						<small>{{ session['tipo_user'] }}</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; DASHBOARD</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="/home" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								HOGAR
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-case"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PUESTOS DE TRABAJO
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+						
+							<li class="full-width">
+								<a href="/dpt" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR PUESTO DE TRABAJO
+									</div>
+								</a>
+							</li>
+							{% for departamento in departamentos %}
+							<li class="full-width department-item" data-id="{{ departamento['id_departamento'] }}">
+								
+								<a href="{{ url_for('seleccionar_departamento', id_departamento=departamento.id_departamento) }}" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-desktop-windows"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										{{ departamento.nombre_dep }}
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						
+					</li>
+					{% if session.get('tipo_user') == 'Administrador' %}
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet ">
+								USUARIOS
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+							<li class="full-width">
+								<a href="/user" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-account"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR USUARIOS
+									</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% endif %}
+                    <li class="full-width">
+                        <a href="/reporte" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-file-text"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                REPORTE
+                            </div>
+                        </a>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<section class="full-width header-well">
+			<div class="full-width header-well-icon">
+				<i class="zmdi zmdi-city-alt"></i>
+			</div>
+			<div class="full-width header-well-text">
+				<p class="text-condensedLight">
+					Bienvenido al sistema de gestión de puestos de trabajo. Agregue nuevos cargos, defina sus características y asigne responsables de manera sencilla.
+				</p>
+			</div>
+		</section>
+
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__tab-bar">
+				{% if session.get('tipo_user') == 'Administrador' %}
+				<a href="#tabCreate" class="mdl-tabs__tab is-active ">Crear</a>
+				
+				<a href="#tabList" class="mdl-tabs__tab">Lista</a>
+				{% endif %}
+			</div>
+
+		
+		
+<!-- Panel CREAR -->
+{% if session.get('tipo_user') == 'Administrador' %}
+<div class="mdl-tabs__panel is-active" id="tabCreate">
+	<div class="full-width panel-tittle bg-primary text-center tittles">
+		Crear nuevo Puesto de Trabajo
+	</div>
+	<div class="full-width panel-content">
+		<form action="/departamento" method="post" id="formRegistrarDepartamento" class="form-registrar-departamento">
+			<h5 class="text-condensedLight"><strong>DATOS</strong></h5>
+				
+<!-- Nombre del Puesto de Trabajo (Máximo 20 caracteres) -->
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+	<input class="mdl-textfield__input" type="text" id="nombre_dep" name="nombre_dep" maxlength="20" required>
+	<label class="mdl-textfield__label" for="nombre_dep"><strong>Nombre de Puesto de Trabajo</strong></label>
+</div>
+
+<!-- Tipo de Puesto de Trabajo (Selector) -->
+<div style="margin-bottom: 20px;">
+	<label for="tipo_de_trabajo"><strong>Tipo de Puesto de Trabajo:</strong></label>
+	<select id="tipo_de_trabajo" name="tipo_de_trabajo" class="mdl-textfield__input" required>
+		<option value="" disabled selected>Seleccione</option>
+		<option value="docentes">Docente</option>
+		<option value="administrativo">Administrativo</option>
+	</select>
+</div>
+
+<!-- Encargado del Puesto de Trabajo (Máximo 20 caracteres) -->
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+	<input class="mdl-textfield__input" type="text" id="encargado" name="encargado" maxlength="20" required>
+	<label class="mdl-textfield__label" for="encargado"><strong>Encargado del Puesto de Trabajo</strong></label>
+</div>
+					<!-- Botón de añadir -->
+					<p class="text-center">
+						<button type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addJob">
+							<i class="zmdi zmdi-plus"></i>
+						</button>
+						<div class="mdl-tooltip" for="btn-addJob">Añadir Puesto de Trabajo</div>
+					</p>
+				</form>
+			</div>
+		</div>
+	
+			<!-- Sección de Lista -->
+			<div class="mdl-tabs__panel " id="tabList">
+				<div class="full-width panel mdl-shadow--2dp">
+					{% endif %}
+					<div class="full-width panel-tittle bg-success text-center tittles">
+						Lista de Puestos de Trabajo</div><style>.bg-success {background-color: #2A6F97 !important;}</style>
+					</div>
+					
+					<!--<div class="full-width panel-content">
+						 Buscador 
+						<form action="#">
+							<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+								<label class="mdl-button mdl-js-button mdl-button--icon" for="searchJob">
+									<i class="zmdi zmdi-search"></i>
+								</label>
+								<div class="mdl-textfield__expandable-holder">
+									<input class="mdl-textfield__input" type="text" id="searchJob">
+								</div>
+							</div>
+						</form>
+						-->
+						<!-- TABLA DE VISTA !-->
+
+						<table id="departamentoTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">Nombre</th>
+									<th>Tipo de Puesto</th>
+									
+									<th>Encargado</th>
+									{% if session.get('tipo_user') == 'Administrador' %}
+									<th>Acciones</th>
+									{% endif %}
+								</tr>
+							</thead>
+							<tbody>
+								
+									{% for departamento in departamentos %}
+									<tr>
+										<td>{{ departamento['nombre_dep'] }}</td>
+										<td>{{ departamento['tipo_de_trabajo'] }}</td>
+										<td>{{ departamento['encargado'] }}</td>
+										
+										<td>
+									<td>
+										{% if session.get('tipo_user') == 'Administrador' %}
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored btn-modificar "
+    									data-departamento-id="{{ departamento['id_departamento'] }}"
+    									style="background-color: #2a972a; color: white;">Modificar</button>
+										
+										<form id="form-eliminar-departamento-{{ departamento['id_departamento'] }}" class="form-eliminar-departamento" action="/eliminar_departamento/{{ departamento['id_departamento'] }}" method="post">
+											<button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored " 
+												style="background-color: rgb(202, 30, 30); color: white;"
+												data-departamento-id="{{ departamento['id_departamento'] }}">
+												Eliminar
+											</button>
+										</form>
+										{% endif %}
+									</td>
+								</tr>
+								<tr id="formulario-modificacion-{{ departamento['id_departamento'] }}" style="display: none;">
+									<td colspan="4">
+								
+									<form action="/modificar_departamento/{{ departamento['id_departamento']}}" method="post" class="form-modificar-departamento">
+										<h5 class="text-condensedLight"><strong><center>DATOS</center></strong></h5>
+									
+										<!-- Nombre del Puesto de Trabajo (Máximo 20 caracteres) -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+											<input class="mdl-textfield__input" type="text" id="nombre_dep" name="nombre_dep" value="{{ departamento['nombre_dep'] }}" maxlength="20" required>
+											<label class="mdl-textfield__label" for="jobName" ><strong>Nombre de Puesto de Trabajo</strong></label>
+										</div>
+									
+										<!-- Tipo de Puesto de Trabajo (Selector) -->
+										<div style="margin-bottom: 20px;">
+											<label for="jobType"><strong>Tipo de Puesto de Trabajo:</strong></label>
+											<select id="tipo_de_trabajo" name="tipo_de_trabajo" class="mdl-textfield__input" required>
+												<option value="" disabled selected>Seleccione</option>
+												<option value="docentes" {% if departamento['tipo_de_trabajo'] == 'docentes' %}selected{% endif %}>Docente</option>
+												<option value="administrativo" {% if departamento['tipo_de_trabajo'] == 'administrativo' %}selected{% endif %}>Administrativo</option>
+											</select>
+										</div>
+									
+										<!-- Encargado del Puesto de Trabajo (Máximo 20 caracteres) -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+											<input class="mdl-textfield__input" type="text" id="encargado"name="encargado" value="{{ departamento['encargado'] }}" maxlength="20" required>
+											<label class="mdl-textfield__label" for="jobManager" ><strong>Encargado del Puesto de Trabajo</strong></label>
+										</div>
+										<p class="text-center">
+											<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addJob">
+												<i class="zmdi zmdi-plus"></i>
+											</button>
+											<div class="mdl-tooltip" for="btn-addJob">Añadir Puesto de Trabajo</div>
+										</p>
+									</form>
+								</td>
+								</tr>
+								
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+		</div>
+	</section>
+
+	<script>
+		// Verificamos si el usuario es admin o no cuando intenten enviar el formulario
+		document.getElementById('formRegistrarDepartamento').addEventListener('submit', function(event) {
+			var tipo_user = "{{ session['tipo_user'] }}";  // Obtenemos el tipo de usuario de la sesión
+		
+			if (tipo_user !== 'Administrador') {
+				event.preventDefault();  // Prevenimos el envío del formulario
+				alert('No tienes permisos para registrar un departamento.');  // Mostramos el mensaje
+			}
+		});
+		</script>
+
+	<script>
+	
+	document.addEventListener('DOMContentLoaded', function() {
+    var botonesModificar = document.querySelectorAll('.btn-modificar');
+    botonesModificar.forEach(function(boton) {
+        boton.addEventListener('click', function() {
+            var departamentoID = this.getAttribute('data-departamento-id');
+            var formularioModificacion = document.getElementById('formulario-modificacion-' + departamentoID);
+            if (formularioModificacion) {
+                formularioModificacion.style.display =
+                    formularioModificacion.style.display === 'none' || formularioModificacion.style.display === '' ? 'table-row' : 'none';
+            }
+        });
+    });
+});
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Capturamos los elementos del formulario
+			const jobName = document.getElementById("jobName");
+			const jobManager = document.getElementById("jobManager");
+			const jobDescription = document.getElementById("jobDescription");
+	
+			// Función para restringir el número máximo de caracteres
+			function enforceMaxLength(input, maxLength) {
+				if (input.value.length > maxLength) {
+					input.value = input.value.substring(0, maxLength); // Corta el texto al límite permitido
+				}
+			}
+	
+			// Aplicamos la restricción a cada campo
+			jobName.addEventListener("input", function () {
+				enforceMaxLength(jobName, 20);
+			});
+	
+			jobManager.addEventListener("input", function () {
+				enforceMaxLength(jobManager, 20);
+			});
+	
+			jobDescription.addEventListener("input", function () {
+				enforceMaxLength(jobDescription, 150);
+			});
+		});
+	</script>
+<!--Sweetalert de eliminar -->
+<script>
+    document.querySelectorAll('.form-eliminar-departamento button').forEach(function(boton) {
+        boton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevenimos el envío inmediato
+
+            const departamentoID = this.getAttribute('data-departamento-id');
+            const formID = 'form-eliminar-departamento-' + departamentoID;
+            const formularioEliminar = document.getElementById(formID);
+
+            if (!formularioEliminar) {
+                console.error('Formulario no encontrado con ID:', formID);
+                return;
+            }
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Este departamento será eliminado permanentemente.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    formularioEliminar.submit();
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: 'El departamento ha sido eliminado.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<!--Sweetaler para registra y modificar-->
+<script>
+	
+	  
+	// Función para manejar el mensaje de éxito y luego enviar el formulario para la modificación de usuario
+	document.querySelectorAll('.form-modificar-departamento').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su puesto de trabajo se ha modificado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	
+	document.querySelectorAll('.form-registrar-departamento').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su puesto de trabajo se ha registrado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	</script>
+
+	<style>
+		.mdl-data-table td {
+		text-align: left; 
+	}
+	
+	.mdl-data-table th {
+		text-align: left; 
+	}
+	</style>
+
+    {% elif var5 %}
+
+    <!-- RECURSOS -->
+	<!-- Notifications area -->
+	<section class="full-width container-notifications">
+		<div class="full-width container-notifications-bg btn-Notification"></div>
+	    <section class="NotificationArea">
+	        <div class="full-width text-center NotificationArea-title tittles">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+	        <a href="#" class="Notification" id="notifation-unread-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>New User Registration</strong> 
+	                    <br>
+	                    <small>Just Now</small>
+	                </p>
+	            </div>
+	        	<div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">Notification as UnRead</div> 
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Updates</strong> 
+	                    <br>
+	                    <small>30 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-unread-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>Archive uploaded</strong> 
+	                    <br>
+	                    <small>31 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">Notification as UnRead</div>
+	        </a> 
+	        <a href="#" class="Notification" id="notifation-read-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Mail</strong> 
+	                    <br>
+	                    <small>37 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-3">
+	            <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>Folder delete</strong> 
+	                    <br>
+	                    <small>1 hours Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">Notification as Read</div>
+	        </a>  
+	    </section>
+	</section>
+	<!-- navBar -->
+	<div class="full-width navBar">
+		<div class="full-width navBar-options">
+			<i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>	
+			<div class="mdl-tooltip" for="btn-menu">Menu</div>
+			<nav class="navBar-options-list">
+				<ul class="list-unstyle">
+<!--
+<li class="btn-Notification" id="notifications">
+    <i class="zmdi zmdi-notifications"></i>
+    <div class="mdl-tooltip" for="notifications">Notifications</div>
+</li>
+-->
+<button id="btn-logout" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: transparent; border: none;">
+	<i class="zmdi zmdi-power" style="color: white;"></i>
+	<div class="mdl-tooltip" for="btn-logout">Cerrar Sesión</div>
+</button>
+					<li class="text-condensedLight noLink">
+						<small>{{ session['username'] }}</small>
+					</li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='assets/img/' + session.get('avatar', 'avatar-male.png')) }}" alt="Avatar" class="img-responsive">
+						</figure>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> IET
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='assets/img/' + session['avatar']) }}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						{{ session['username'] }}<br>
+						<small>{{ session['tipo_user'] }}</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; DASHBOARD</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="/home" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								HOGAR
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-case"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PUESTOS DE TRABAJO
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+						
+							<li class="full-width">
+								<a href="/dpt" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR PUESTO DE TRABAJO
+									</div>
+								</a>
+							</li>
+							{% for departamento in departamentos %}
+							<li class="full-width department-item" data-id="{{ departamento['id_departamento'] }}">
+								
+								<a href="{{ url_for('seleccionar_departamento', id_departamento=departamento.id_departamento) }}" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-desktop-windows"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										{{ departamento.nombre_dep }}
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						
+					</li>
+					{% if session.get('tipo_user') == 'Administrador' %}
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet ">
+								USUARIOS
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+							<li class="full-width">
+								<a href="/user" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-account"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR USUARIOS
+									</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% endif %}
+                    <li class="full-width">
+                        <a href="/reporte" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-file-text"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                REPORTE
+                            </div>
+                        </a>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+	<!-- pageContent -->
+	<section class="full-width pageContent">
+		<section class="full-width header-well">
+			<div class="full-width header-well-icon">
+				<i class="zmdi zmdi-desktop-windows"></i>
+			</div>
+			<div class="full-width header-well-text">
+				<p class="text-condensedLight">
+					Bienvenido al panel de gestión de equipos tecnológicos. Desde aquí puede agregar nuevos dispositivos, organizar su información y realizar modificaciones según sea necesario.
+				</p>
+			</div>
+		</section>
+		{% if session.get('tipo_user') == 'Administrador' %}
+		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+			<div class="mdl-tabs__tab-bar">
+				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">NEW</a>
+				<a href="#tabListCategory" class="mdl-tabs__tab">LIST</a>
+			</div>
+			
+			<div class="mdl-tabs__panel is-active" id="tabNewCategory">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
+						<div class="full-width panel mdl-shadow--2dp">
+							<div class="full-width panel-tittle bg-primary text-center tittles ">
+								NUEVO RECURSO TECNOLÓGICO
+							</div>
+							<div class="full-width panel-content ">
+								
+							<!-- Tipo de recurso -->
+							<div style="margin-bottom: 20px;">
+								<label for="resourceType"><strong>Tipo de Recurso:</strong></label>
+								<select id="resourceType" name="resourceType" class="mdl-textfield__input " required onchange="toggleResourceFields()">
+									<option value="" disabled selected>Seleccione</option>
+									<option value="otros">Otros</option>
+									<option value="computadora">Computadora</option>
+								</select>
+							</div>
+								<form action="/inve" method="post" id="formRegistrarEquipo" class="form-registrar-equipos " >
+									<h5 class="text-condensedLight"><strong>Datos</strong></h5>
+									<input type="hidden" name="departamento_id" value="{{ session.get('id_departamento', '') }}">
+									<!-- Campos para "Computadora" -->
+									<div id="computadoraFields" style="display: none;">
+										<!-- Nombre PC -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="nombre_pc" name="nombre_pc" maxlength="20" required>
+											<label class="mdl-textfield__label" for="nombre_pc"><strong>Nombre PC</strong></label>
+										</div>
+				
+										<!-- Serial PC -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="mac_placa" name="mac_placa" maxlength="15" required>
+											<label class="mdl-textfield__label" for="mac_placa"><strong>Serial PC</strong></label>
+										</div>
+				
+										<!-- Fuentes de poder -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="number" id="fuentes_de_poder" name="fuentes_de_poder" min="0" max="9999" required>
+											<label class="mdl-textfield__label" for="fuentes_de_poder"><strong>Fuente de Poder (W)</strong></label>
+										</div>
+				
+										<!-- Procesador -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="text" id="procesador" name="procesador" maxlength="30" required>
+											<label class="mdl-textfield__label" for="procesador"><strong>Procesador</strong></label>
+										</div>
+										<!-- disco duro -->
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<input class="mdl-textfield__input" type="number" id="disco_duro" name="disco_duro" min="0" max="9999" required>
+											<label class="mdl-textfield__label" for="disco_duro"><strong>Disco Duro (GB)</strong></label>
+										</div>
+										<!-- Lista desplegable de RAM -->
+										<div style="margin-bottom: 20px;">
+											<label for="ram"><strong>RAM:</strong></label>
+											<select id="ram" name="ram" class="mdl-textfield__input">
+												<option value="2GB">2GB</option>
+												<option value="4GB">4GB</option>
+												<option value="8GB">8GB</option>
+												<option value="16GB">16GB</option>
+												<option value="32GB">32GB</option>
+											</select>
+										</div>
+				
+										<!-- Fecha de ingreso -->
+										<div class="mdl-textfield mdl-js-textfield" style="margin-bottom: 20px;">
+											<label for="fecha_ingreso"><strong>Fecha de Ingreso:</strong></label>
+											<input class="mdl-textfield__input" type="date" id="fecha_ingreso" name="fecha_ingreso" required>
+										</div>
+				
+										<!-- Estado -->
+										<div style="margin-bottom: 20px;">
+											<label for="estado"><strong>Estado:</strong></label>
+											<select id="estado" name="estado" class="mdl-textfield__input" required>
+												<option value="" disabled selected>Seleccione el estado</option>
+												<option value="disponible">Disponible</option>
+												<option value="inactivo">Inactivo</option>
+												<option value="mantenimiento">Mantenimiento</option>
+											</select>
+										</div>
+										
+									</div>
+						<!-- Botón para agregar "Computadora" (Oculto por defecto) -->
+<p class="text-center" id="btn-computadora-container" style="display: none;">
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btnEquipo">
+	<i class="zmdi zmdi-plus"></i>
+	</button>
+	<div class="mdl-tooltip" for="btnEquipo">Agregar Computadora</div>
+	</p>
+								</form>
+
+
+								<form action="/otro" method="post" id="formRegistrarOtros" class="form-registrar-otros">
+
+									<input type="hidden" name="idotros_iddepartamento" value="{{ session.get('id_departamento', '') }}">
+									<!-- Campos adicionales dependiendo del tipo de recurso -->
+									<div id="otrosFields" style="display: none;">
+										<div style="margin-bottom: 20px;">
+											<label for="otrosSelect"><strong>Seleccione:</strong></label>
+											<select id="otrosSelect" name="nombre_otros" class="mdl-textfield__input" required>
+												<option value="tv">TV</option>
+												<option value="videobeam">Video-Beam</option>
+											</select>
+										</div>
+
+										<div class="mdl-textfield mdl-js-textfield" style="margin-bottom: 20px;">
+											<label for="fechaIngresoOtros"><strong>Fecha de Ingreso:</strong></label>
+											<input class="mdl-textfield__input" type="date" id="fechaIngresoOtros" name="fecha_ingreso_otros" required>
+										</div>
+
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<textarea class="mdl-textfield__input" id="descripcionOtros" name="descripcion_otros" rows="3" maxlength="200" required></textarea>
+											<label class="mdl-textfield__label" for="descripcionOtros"><strong>Descripción</strong></label>
+										</div>
+										
+										<!-- Estado del Recurso -->
+										<div style="margin-bottom: 20px;">
+											<label for="estadoRecurso"><strong>Estado:</strong></label>
+											<select id="estadoRecurso" name="estado_otros" class="mdl-textfield__input" required>
+												<option value="activo">Activo</option>
+												<option value="inactivo">Inactivo</option>
+												<option value="mantenimiento">Mantenimiento</option>
+											</select>
+										</div>
+
+										
+									</div>
+<!-- Botón para agregar "Otros" (Oculto por defecto) -->
+<p class="text-center" id="btn-otros-container" style="display: none;">
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btnOtros">
+<i class="zmdi zmdi-plus"></i>
+</button>
+<div class="mdl-tooltip" for="btnOtros">Agregar Otros</div>
+</p>
+
+</form>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Pestaña LIST -->
+<div class="mdl-tabs__panel" id="tabListCategory">
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+            <div class="full-width panel mdl-shadow--2dp">
+                <div class="full-width panel-tittle bg-primary text-center tittles">
+                    Lista de Recursos Tecnológicos
+                </div>
+                <div class="full-width panel-content">
+                    <div class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+							<thead>
+								<tr>
+									
+                                    <th>Nombre</th>
+                                    <th>Serial</th>
+                                    <th>Fecha de Ingreso</th>
+                                    <th>Estado</th>
+									{% if session.get('tipo_user') == 'Administrador' %}
+                                    <th>Acciones</th>
+									{% endif %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for equipo in inventarios %}
+								<tr>
+									<td>{{ equipo.nombre_pc }}</td>
+									<td>{{ equipo.mac_placa }}</td>
+									<td>{{ equipo.fecha_ingreso }}</td>
+									<td>{{ equipo.estado }}</td>
+									<td>
+										{% if session.get('tipo_user') == 'Administrador' %}
+											<!-- Mostrar el botón de modificar solo si el usuario es admin -->
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored btn-modificar "
+											data-equipo-id="{{ equipo['id_equipos'] }}"
+											style="background-color: #2a972a; color: white;">
+										Modificar
+									</button>
+							
+										<!-- Mostrar el formulario de eliminar solo si el usuario es admin -->
+<form class="form-eliminar" action="/eliminar_inventario/{{ equipo['id_equipos'] }}" method="post" id="form-eliminar-{{ equipo['id_equipos'] }}">
+    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored "
+            style="background-color: rgb(202, 30, 30); color: white;" data-equipo-id="{{ equipo['id_equipos'] }}">
+        Eliminar
+    </button>
+</form>
+{% endif %}					
+										
+									</td>
+								</tr>
+								<tr id="formulario-modificacion-{{ equipo['id_equipos'] }}" style="display: none;">
+									<td colspan="6">
+										<form action="/modificar_inventario/{{ equipo['id_equipos'] }}" method="post" class="form-modificar-equipos">
+											<h5 class="text-condensedLight"><center><strong>DATOS</strong></center></h5>
+										
+											<input type="hidden" name="departamento_id" value="{{ session.get('id_departamento', '') }}">
+											<!-- Campos para "Computadora" -->
+
+										
+												<!-- Nombre PC -->
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+													<input class="mdl-textfield__input" type="text" id="nombre_pc" name="nombre_pc" maxlength="20"
+													value="{{ equipo['nombre_pc'] }}" required>
+													<label class="mdl-textfield__label" for="nombre_pc"><strong>Nombre PC</strong></label>
+												</div>
+											<br>
+												<!-- Serial PC -->
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+													<input class="mdl-textfield__input" type="text" id="mac_placa" name="mac_placa" maxlength="15"
+													value="{{ equipo['mac_placa'] }}" required>
+													<label class="mdl-textfield__label" for="mac_placa"><strong>Serial PC</strong></label>
+												</div>
+												<br>
+												<!-- Fuentes de poder -->
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+													<input class="mdl-textfield__input" type="number" id="fuentes_de_poder" name="fuentes_de_poder" min="0" max="9999" 
+													value="{{ equipo['fuentes_de_poder'] }}" required>
+													<label class="mdl-textfield__label" for="fuentes_de_poder"><strong>Fuente de Poder (W)</strong></label>
+												</div>
+												<br>
+												<!-- Procesador -->
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-bottom: 20px;">
+													<input class="mdl-textfield__input" type="text" id="procesador" name="procesador" maxlength="20"
+													value="{{ equipo['procesador'] }}"required>
+													<label class="mdl-textfield__label" for="procesador"><strong>Procesador</strong></label>
+												</div>
+												<br>
+												<!-- disco duro -->
+												<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"style="margin-bottom: 20px;">
+													<input class="mdl-textfield__input" type="number" id="disco_duro" name="disco_duro" min="0" max="9999"
+													value="{{ equipo['disco_duro'] }}"required>
+													<label class="mdl-textfield__label" for="disco_duro"><strong>Disco Duro (GB)</strong></label>
+												</div>
+												<br>
+												<!-- Lista desplegable de RAM -->
+												<div style="margin-bottom: 20px;">
+													<label for="ram"><strong>RAM:</strong></label>
+													<select id="ram" name="ram" class="mdl-textfield__input">
+													<option value="2GB" {% if equipo['ram'] == '2GB' %}selected{% endif %}>2GB</option>
+                    								<option value="4GB" {% if equipo['ram'] == '4GB' %}selected{% endif %}>4GB</option>
+                  									<option value="8GB" {% if equipo['ram'] == '8GB' %}selected{% endif %}>8GB</option>
+                    								<option value="16GB" {% if equipo['ram'] == '16GB' %}selected{% endif %}>16GB</option>
+                    								<option value="32GB" {% if equipo['ram'] == '32GB' %}selected{% endif %}>32GB</option>
+													</select>
+												</div>
+												<br>
+												<!-- Fecha de ingreso -->
+												<div class="mdl-textfield mdl-js-textfield" style="margin-bottom: 20px;">
+													<label for="fecha_ingreso"><strong>Fecha de Ingreso:</strong></label>
+													<input class="mdl-textfield__input" type="date" id="fecha_ingreso" name="fecha_ingreso" 
+													value="{{ equipo['fecha_ingreso'] }}"  required>
+												</div>
+												
+												<br>
+												<!-- Estado -->
+												<div style="margin-bottom: 20px;">
+													<label for="estado"><strong>Estado:</strong></label>
+													<select id="estado" name="estado" class="mdl-textfield__input" required>
+														<option value="disponible" {% if equipo['estado'] == 'disponible' %}selected{% endif %}>Disponible</option>
+														<option value="inactivo" {% if equipo['estado'] == 'inactivo' %}selected{% endif %}>Inactivo</option>
+														<option value="mantenimiento" {% if equipo['estado'] == 'mantenimiento' %}selected{% endif %}>Mantenimiento</option>
+													</select>
+												</div>
+												<br>
+												
+											</div>
+												<!-- Botón para agregar "Computadora" (Oculto por defecto) -->
+										<p class="text-center" >
+										<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addComputadora">
+										<i class="zmdi zmdi-plus"></i>
+										</button>
+										<div class="mdl-tooltip" for="btn-addComputadora">Agregar Computadora</div>
+										
+										</form>	
+									</td>
+								</tr>
+						
+								{% endfor %}
+							</tbody>
+							{% for equipo in otros %}
+								<tr>
+									<td>{{ equipo.nombre_otros }}</td>
+									<td>{{ equipo.descripcion_otros }}</td>
+									<td>{{ equipo.fecha_ingreso_otros }}</td>
+									<td>{{ equipo.estado_otros }}</td>
+									<td>
+										{% if session.get('tipo_user') == 'Administrador' %}
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored btn-modificar " 
+										data-otros-id="{{ equipo['idotros'] }}"
+										style="background-color: #2a972a; color: white;">Modificar</button>
+
+										<form id="form-eliminar-otros-{{ equipo['idotros'] }}" class="form-eliminar"
+										action="/eliminar_otros/{{ equipo['idotros'] }}" method="post">
+									  <button type="button"
+										  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+										  style="background-color: rgb(202, 30, 30); color: white;"
+										  data-otros-id="{{ equipo['idotros'] }}">
+										  Eliminar
+									  </button>
+								  </form>
+								  {% endif %}	
+                                        </td>
+								</tr>
+								<tr id="formulario-modificacion-otros-{{ equipo['idotros'] }}" style="display: none;">
+									<td colspan="6">
+										<form action="/modificar_otros/{{ equipo['idotros'] }}" method="post"  class="form-modificar-otros">
+											<h5 class="text-condensedLight"><center><strong>DATOS</strong></center></h5>
+										
+											
+										
+									<input type="hidden" name="idotros_iddepartamento" value="{{ session.get('idotros_iddepartamento', '') }}">
+									<!-- Campos adicionales dependiendo del tipo de recurso -->
+									
+										<div style="margin-bottom: 20px;">
+											<label for="otrosSelect"><strong>Seleccione:</strong></label>
+											<select id="otrosSelect" name="nombre_otros" class="mdl-textfield__input">
+												<option value="tv" {% if equipo['nombre_otros'] == 'tv' %}selected{% endif %}>TV</option>
+												<option value="videobeam"  {% if equipo['nombre_otros'] == 'videobeam' %}selected{% endif %}>Video-Beam</option>
+											</select>
+										</div>
+										<br>
+										<div class="mdl-textfield mdl-js-textfield" style="margin-bottom: 20px;">
+											<label for="fechaIngresoOtros"><strong>Fecha de Ingreso:</strong></label>
+											<input class="mdl-textfield__input" type="date" id="fechaIngresoOtros" name="fecha_ingreso_otros" 
+											value="{{ equipo['fecha_ingreso_otros'] }}" required>
+										</div>
+										<br>
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+											<textarea class="mdl-textfield__input" id="descripcionOtros" name="descripcion_otros" rows="3" required>{{ equipo['descripcion_otros'] }}</textarea>
+											<label class="mdl-textfield__label" for="descripcionOtros"><strong>Descripción</strong></label>
+										</div>
+										<br>
+										<!-- Estado del Recurso -->
+										<div style="margin-bottom: 20px;">
+											<label for="estadoRecurso"><strong>Estado:</strong></label>
+											<select id="estadoRecurso" name="estado_otros" class="mdl-textfield__input">
+												<option value="activo" {% if equipo['estado_otros'] == 'activo' %}selected{% endif %}>Activo</option>
+												<option value="inactivo" {% if equipo['estado_otros'] == 'inactivo' %}selected{% endif %}>Inactivo</option>
+												<option value="mantenimiento"  {% if equipo['estado_otros'] == 'mantenimiento' %}selected{% endif %}>Mantenimiento</option>
+											</select>
+										</div>
+
+										
+									</div>
+<!-- Botón para agregar "Otros" (Oculto por defecto) -->
+<p class="text-center" >
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addComputadora">
+	<i class="zmdi zmdi-plus"></i>
+	</button>
+	<div class="mdl-tooltip" for="btn-addComputadora">Agregar Computadora</div>
+										
+										</form>	
+									</td>
+								</tr>	
+									
+							{% endfor %}	
+						</table>
+					</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>								
+
+<script>
+    // Seleccionamos los dos formularios
+    const formRegistrarEquipo = document.getElementById('formRegistrarEquipo');
+    const formRegistrarOtros = document.getElementById('formRegistrarOtros');
+
+    // Función para manejar la validación
+    function validarFormulario(event) {
+        var tipo_user = "{{ session['tipo_user'] }}";  // Obtenemos el tipo de usuario de la sesión
+
+        if (tipo_user !== 'Administrador') {
+            event.preventDefault();  // Prevenimos el envío del formulario
+            alert('No tienes permisos para registrar un equipo y otros.');  // Mostramos el mensaje
+        }
+    }
+
+    // Agregamos el eventListener a ambos formularios
+    if (formRegistrarEquipo) {
+        formRegistrarEquipo.addEventListener('submit', validarFormulario);
+    }
+
+    if (formRegistrarOtros) {
+        formRegistrarOtros.addEventListener('submit', validarFormulario);
+    }
+</script>
+	
+
+<script>
+    function toggleResourceFields() {
+        let resourceType = document.getElementById("resourceType").value;
+
+        // Ocultar todo por defecto
+        document.getElementById("otrosFields").style.display = "none";
+        document.getElementById("computadoraFields").style.display = "none";
+        document.getElementById("btn-otros-container").style.display = "none";
+        document.getElementById("btn-computadora-container").style.display = "none";
+
+        // Mostrar solo si selecciona "Otros" o "Computadora"
+        if (resourceType === "otros") {
+            document.getElementById("otrosFields").style.display = "block";
+            document.getElementById("btn-otros-container").style.display = "block";
+        } else if (resourceType === "computadora") {
+            document.getElementById("computadoraFields").style.display = "block";
+            document.getElementById("btn-computadora-container").style.display = "block";
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var botonesModificar = document.querySelectorAll('.btn-modificar');
+        
+        botonesModificar.forEach(function(boton) {
+            boton.addEventListener('click', function() {
+                
+                var equipoID = this.getAttribute('data-otros-id') || this.getAttribute('data-equipo-id');
+                var formularioModificacion;
+
+                if (this.hasAttribute('data-otros-id')) {
+                    formularioModificacion = document.getElementById('formulario-modificacion-otros-' + equipoID);
+                } else if (this.hasAttribute('data-equipo-id')) {
+                    formularioModificacion = document.getElementById('formulario-modificacion-' + equipoID);
+                }
+
+                if (formularioModificacion) { 
+                    
+                    if (formularioModificacion.style.display === 'table-row') {
+                        formularioModificacion.style.display = 'none';
+                    } else {
+                        formularioModificacion.style.display = 'table-row';
+                    }
+                } else {
+                    console.error('No se encontró el formulario con el ID esperado para:', equipoID);
+                }
+            });
+        });
+    });
+</script>
+
+	
+				
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.querySelectorAll('.department-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+        var departamentoId = item.getAttribute('data-id');
+        
+       
+        sessionStorage.setItem('departamento_id', departamentoId);
+
+       
+        window.location.href = '/equipos?departamento_id=' + departamentoId;
+    });
+});
+	</script>
+
+<script>
+    document.querySelectorAll('.form-eliminar button').forEach(function(boton) {
+        boton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Obtener ID dependiendo del tipo
+            var equipoID = this.getAttribute('data-equipo-id');
+            var otrosID = this.getAttribute('data-otros-id');
+
+            // Construimos el ID del formulario
+            var idFormulario = equipoID 
+                ? 'form-eliminar-' + equipoID 
+                : 'form-eliminar-otros-' + otrosID;
+
+            var formularioEliminar = document.getElementById(idFormulario);
+
+            console.log("Buscando el formulario con ID:", idFormulario);
+            console.log("Formulario encontrado:", formularioEliminar);
+
+            if (!formularioEliminar) {
+                console.error("❌ No se encontró el formulario.");
+                return;
+            }
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¡Este equipo será eliminado permanentemente!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    formularioEliminar.submit();
+
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: 'El equipo ha sido eliminado con éxito.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        this.closest('tr')?.remove();
+                    });
+                }
+            });
+        });
+    });
+</script>
+<!--SWEETALER DE ELIMINAR OTROS -->
+
+
+  
+  
+		  </script>
+  
+  <!--ACA ESTA LOS SWEETALERT DE MODIFICAR Y REGISTRA-->
+  <script>
+	
+	  
+	  // Función para manejar el mensaje de éxito y luego enviar el formulario para la modificación de usuario
+	  document.querySelectorAll('.form-modificar-equipos').forEach(function(form) {
+		  form.addEventListener('submit', function(event) {
+			  event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	  
+			  Swal.fire({
+				  title: "¡Éxito!",
+				  text: "Su equipo se ha modificado con éxito.",
+				  icon: "success",
+				  confirmButtonText: "Aceptar"
+			  }).then((result) => {
+				  if (result.isConfirmed) {
+					  // Si el usuario presiona "Aceptar", enviar el formulario
+					  form.submit(); // Enviar el formulario de modificación
+				  }
+			  });
+		  });
+	  });
+	  
+	  // Función para manejar el evento de creación de usuario con SweetAlert
+	  document.querySelectorAll('.form-registrar-equipos').forEach(function(form) {
+		  form.addEventListener('submit', function(event) {
+			  event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	  
+			  Swal.fire({
+				  title: "¡Éxito!",
+				  text: "Su equipo se ha registrado con éxito.",
+				  icon: "success",
+				  confirmButtonText: "Aceptar"
+			  }).then((result) => {
+				  if (result.isConfirmed) {
+					  // Si el usuario presiona "Aceptar", enviar el formulario
+					  form.submit(); // Enviar el formulario de modificación
+				  }
+			  });
+		  });
+	  });
+	  </script>
+
+	   <!--ACA ESTA LOS SWEETALERT DE MODIFICAR Y REGISTRA OTROS-->
+  <script>
+	
+	  
+	// Función para manejar el mensaje de éxito y luego enviar el formulario para la modificación de usuario
+	document.querySelectorAll('.form-modificar-otros').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su equipo se ha modificado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	
+	document.querySelectorAll('.form-registrar-otros').forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+	
+			Swal.fire({
+				title: "¡Éxito!",
+				text: "Su equipo se ha registrado con éxito.",
+				icon: "success",
+				confirmButtonText: "Aceptar"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Si el usuario presiona "Aceptar", enviar el formulario
+					form.submit(); // Enviar el formulario de modificación
+				}
+			});
+		});
+	});
+	</script>
+  
+
+
+
+
+
+
+	<style>
+		.mdl-data-table td {
+		text-align: left; 
+	}
+	
+	.mdl-data-table th {
+		text-align: left; 
+	}
+	</style>
+    <!-- ... -->
+	{% elif var6 %}
+	<!-- Notifications area -->
+	<section class="full-width container-notifications">
+		<div class="full-width container-notifications-bg btn-Notification"></div>
+	    <section class="NotificationArea">
+	        <div class="full-width text-center NotificationArea-title tittles">Notifications <i class="zmdi zmdi-close btn-Notification"></i></div>
+	        <a href="#" class="Notification" id="notifation-unread-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-accounts-alt bg-info"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>New User Registration</strong> 
+	                    <br>
+	                    <small>Just Now</small>
+	                </p>
+	            </div>
+	        	<div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-1">Notification as UnRead</div> 
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-1">
+	            <div class="Notification-icon"><i class="zmdi zmdi-cloud-download bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Updates</strong> 
+	                    <br>
+	                    <small>30 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-1">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-unread-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-upload bg-success"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle"></i>
+	                    <strong>Archive uploaded</strong> 
+	                    <br>
+	                    <small>31 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-unread-2">Notification as UnRead</div>
+	        </a> 
+	        <a href="#" class="Notification" id="notifation-read-2">
+	            <div class="Notification-icon"><i class="zmdi zmdi-mail-send bg-danger"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>New Mail</strong> 
+	                    <br>
+	                    <small>37 Mins Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-2">Notification as Read</div>
+	        </a>
+	        <a href="#" class="Notification" id="notifation-read-3">
+	            <div class="Notification-icon"><i class="zmdi zmdi-folder bg-primary"></i></div>
+	            <div class="Notification-text">
+	                <p>
+	                    <i class="zmdi zmdi-circle-o"></i>
+	                    <strong>Folder delete</strong> 
+	                    <br>
+	                    <small>1 hours Ago</small>
+	                </p>
+	            </div>
+	            <div class="mdl-tooltip mdl-tooltip--left" for="notifation-read-3">Notification as Read</div>
+	        </a>  
+	    </section>
+	</section>
+ 	<!-- navBar -->
+	 <div class="full-width navBar">
+		<div class="full-width navBar-options">
+			<i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>	
+			<div class="mdl-tooltip" for="btn-menu">Menu</div>
+			<nav class="navBar-options-list">
+				<ul class="list-unstyle">
+<!--
+<li class="btn-Notification" id="notifications">
+    <i class="zmdi zmdi-notifications"></i>
+    <div class="mdl-tooltip" for="notifications">Notifications</div>
+</li>
+-->
+<button id="btn-logout" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: transparent; border: none;">
+	<i class="zmdi zmdi-power" style="color: white;"></i>
+	<div class="mdl-tooltip" for="btn-logout">Cerrar Sesión</div>
+</button>
+					<li class="text-condensedLight noLink">
+						<small>{{ session['username'] }}</small>
+					</li>
+					<li class="noLink">
+						<figure>
+							<img src="{{ url_for('static', filename='assets/img/' + session.get('avatar', 'avatar-male.png')) }}" alt="Avatar" class="img-responsive">
+						</figure>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+    <!-- navLateral -->
+	<section class="full-width navLateral">
+		<div class="full-width navLateral-bg btn-menu"></div>
+		<div class="full-width navLateral-body">
+			<div class="full-width navLateral-body-logo text-center tittles">
+				<i class="zmdi zmdi-close btn-menu"></i> IET
+			</div>
+			<figure class="full-width" style="height: 77px;">
+				<div class="navLateral-body-cl">
+					<img src="{{ url_for('static', filename='assets/img/' + session['avatar']) }}" alt="Avatar" class="img-responsive">
+				</div>
+				<figcaption class="navLateral-body-cr hide-on-tablet">
+					<span>
+						{{ session['username'] }}<br>
+						<small>{{ session['tipo_user'] }}</small>
+					</span>
+				</figcaption>
+			</figure>
+			<div class="full-width tittles navLateral-body-tittle-menu">
+				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; DASHBOARD</span>
+			</div>
+			<nav class="full-width">
+				<ul class="full-width list-unstyle menu-principal">
+					<li class="full-width">
+						<a href="/home" class="full-width">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-view-dashboard"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								HOGAR
+							</div>
+						</a>
+					</li>
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-case"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet">
+								PUESTOS DE TRABAJO
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+						
+							<li class="full-width">
+								<a href="/dpt" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR PUESTO DE TRABAJO
+									</div>
+								</a>
+							</li>
+							{% for departamento in departamentos %}
+							<li class="full-width department-item" data-id="{{ departamento['id_departamento'] }}">
+								
+								<a href="{{ url_for('seleccionar_departamento', id_departamento=departamento.id_departamento) }}" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-desktop-windows"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										{{ departamento.nombre_dep }}
+									</div>
+								</a>
+							</li>
+							{% endfor %}
+						</ul>
+						
+					</li>
+					{% if session.get('tipo_user') == 'Administrador' %}
+					<li class="full-width divider-menu-h"></li>
+					<li class="full-width">
+						<a href="#!" class="full-width btn-subMenu">
+							<div class="navLateral-body-cl">
+								<i class="zmdi zmdi-face"></i>
+							</div>
+							<div class="navLateral-body-cr hide-on-tablet ">
+								USUARIOS
+							</div>
+							<span class="zmdi zmdi-chevron-left"></span>
+						</a>
+						<ul class="full-width menu-principal sub-menu-options">
+							<li class="full-width">
+								<a href="/user" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-account"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										CREAR USUARIOS
+									</div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					{% endif %}
+                    <li class="full-width">
+                        <a href="/reporte" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-file-text"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                REPORTE
+                            </div>
+                        </a>
+                    </li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <section class="full-width header-well">
+        <div class="full-width header-well-icon">
+            <i class="zmdi zmdi-file-text"></i>
+        </div>
+        <div class="full-width header-well-text">
+            <p class="text-condensedLight">
+                En esta sección puedes visualizar y administrar los reportes generados por el sistema.
+                Utiliza los filtros para ordenar y buscar reportes específicos.
+                Puedes visualizar los detalles, descargar en PDF o eliminar un reporte cuando lo desees.
+            </p>
+        </div>
+    </section>
+
+    <div class="full-width divider-menu-h"></div>
+
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+            <!-- Filtros -->
+            <div class="full-width" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px;">
+                    <!-- Buscador -->
+                    <div style="flex: 1; display: flex; align-items: center;">
+                        <i class="zmdi zmdi-search" style="margin-right: 10px;"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar..." style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                    </div>
+
+                    <!-- Filtrar por-->
+                    <div style="margin-left: 15px; display: flex; gap: 10px;">
+						<select id="filtro" onchange="ordenarTabla()" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+							<option disabled selected>Ordenar por...</option>
+							<option value="nombre-asc">Nombre (A-Z)</option>
+							<option value="nombre-desc">Nombre (Z-A)</option>
+							<option value="fecha-asc">Fecha (Más antiguo primero)</option>
+							<option value="fecha-desc">Fecha (Más reciente primero)</option>
+						</select>
+						{% if session.get('tipo_user') == 'Administrador' %}
+						<button id="btnGenerarReporteGlobal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"  
+    style="margin-left: 15px; display: flex; gap: 10px;">Generar Reporte Global </button>	
+	{% endif %}
+                    </div>
+                </div>
+				
+            </div>
+			{% if session.get('tipo_user') == 'Administrador' %}				
+           <!-- Formulario crear reporte -->
+<div class="full-width" style="margin-bottom: 20px;">
+    <form id="formularioReporteGlobal" action="/crear_reporte" method="POST" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <label for="id_departamento">Selecciona un Departamento:</label>
+        <select name="id_departamento" required style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+            {% for dep in departamentos %}
+                <option value="{{ dep['id_departamento'] }}">{{ dep['nombre_dep'] }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" id="btnCrearReporte" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            Crear Reporte
+        </button>
+    </form>
+</div>
+{% endif %}
+            <!-- Tabla -->
+            <h2>Reportes Generados</h2>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive">
+                <thead>
+                    <tr>
+                        <th>Nombre del Reporte</th>
+                        <th>Fecha</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reporte in reportes %}
+                    <tr>
+                        <td>{{ reporte }}</td>
+
+                        <!-- Extraer fecha del nombre del archivo -->
+                        <td>
+                            {% set partes = reporte.split('_') %}
+                            {% if partes|length >= 3 %}
+                                {{ partes[-2] }} {{ partes[-1].replace('.pdf', '').replace('-', ':') }}
+                            {% else %}
+                                Sin fecha
+                            {% endif %}
+                        </td>
+
+						<td>
+							<a href="{{ url_for('descargar_reporte', reporte=reporte) }}" class="mdl-button mdl-js-button mdl-button--icon" title="Descargar PDF">
+								<i class="zmdi zmdi-download "></i>
+							</a>
+							{% if session.get('tipo_user') == 'Administrador' %}	
+							<button class="btn-eliminar-archivo mdl-button mdl-js-button mdl-button--icon" 
+        title="Eliminar" 
+        data-reporte="{{ reporte }}">
+    <i class="zmdi zmdi-delete"></i>
+</button>
+{% endif %}
+						</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputBuscar = document.getElementById('searchInput');
+        const filas = document.querySelectorAll('tbody tr');
+
+        inputBuscar.addEventListener('keyup', function () {
+            const filtro = inputBuscar.value.toLowerCase();
+
+            filas.forEach(fila => {
+                const textoFila = fila.textContent.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+		  <!--ACA esta la vista del boton crear reporte global y reporte especifico -->
+		  <script>
+	document.getElementById("btnGenerarReporteGlobal").addEventListener("click", function(event) {
+    event.preventDefault(); // Evita que se ejecute la acción de redirección inmediatamente
+
+    Swal.fire({
+        title: "¡Éxito!",
+        text: "Su reporte global se ha creado exitosamente.",
+        icon: "success",
+        confirmButtonText: "Aceptar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario presiona "Aceptar", redirigir a la página de reporte global
+            window.location.href = "/reporte_global"; // Redirigir al reporte global
+        }
+    });
+});
+
+// Mostrar el mensaje de éxito y luego enviar el formulario cuando se hace clic en el botón "Crear Reporte"
+document.getElementById("btnCrearReporte").addEventListener("click", function(event) {
+    event.preventDefault(); // Evita que se ejecute la acción de envío del formulario inmediatamente
+
+    Swal.fire({
+        title: "¡Éxito!",
+        text: "Su reporte especifico se ha creado exitosamente.",
+        icon: "success",
+        confirmButtonText: "Aceptar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario presiona "Aceptar", enviar el formulario
+            document.getElementById("formularioReporteGlobal").submit(); // Enviar el formulario
+        }
+    });
+});
+</script>
+<!--ACA esta la vista del boton eliminar -->
+<script>
+	
+	document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-eliminar-archivo').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const nombreArchivo = this.dataset.reporte;
+
+            // Usamos SweetAlert en lugar de confirm()
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: `¿Deseas eliminar el reporte "${nombreArchivo}"?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, realizamos la eliminación
+                    fetch('/eliminar_archivo_reporte', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ reporte: nombreArchivo })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                title: "¡Eliminado!",
+                                text: data.mensaje,
+                                icon: "success",
+                                confirmButtonText: "Aceptar"
+                            }).then(() => {
+                                // Eliminar la fila de la tabla
+                                this.closest('tr').remove();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Error al eliminar el archivo: " + data.mensaje,
+                                icon: "error",
+                                confirmButtonText: "Aceptar"
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Hubo un problema al intentar eliminar el archivo.",
+                            icon: "error",
+                            confirmButtonText: "Aceptar"
+                        });
+                    });
+                }
+            });
+        });
+    });
+});
+	</script>
+	<script>
+    // Obtener el modal y los botones
+    const modal = document.getElementById('modalCrearReporte');
+    const btnAbrirModal = document.getElementById('btnCrearReporteEspecifico');
+    const btnCerrarModal = modal.querySelector('.close-btn');
+
+    // Abrir el modal
+    btnAbrirModal.addEventListener('click', function() {
+        modal.style.display = 'block'; // Mostrar el modal
+    });
+
+    // Cerrar el modal
+    btnCerrarModal.addEventListener('click', function() {
+        modal.style.display = 'none'; // Ocultar el modal
+    });
+
+    // Cerrar el modal si el usuario hace clic fuera del modal
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+</script>
+	
+
+				  <style>
+					.mdl-data-table td {
+					text-align: left; 
+				}
+				
+				.mdl-data-table th {
+					text-align: left; 
+				}
+				</style>
+	  
+	  {% endif %}
+{% endblock %}
