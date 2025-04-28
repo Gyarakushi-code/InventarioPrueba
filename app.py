@@ -575,31 +575,38 @@ def crear_reporte():
         
         # Primero, insertar el reporte en la base de datos para validar despuyes
        
-        insertar_reporte = """
-        INSERT INTO reporte (nombre_reporte, departamento_id, fecha_creacion, ruta_archivo, id_usuario)
-        VALUES (%s, %s, NOW(), %s, %s)
-        """
-        conexion_db.ejecutar_consulta(insertar_reporte, (f"Reporte de {nombre_departamento}", id_departamento, "", id_usuario))
+# 1. Insertar el reporte, pero capturando el id automáticamente
+insertar_reporte = """
+INSERT INTO reporte (nombre_reporte, departamento_id, fecha_creacion, ruta_archivo, id_usuario)
+VALUES (%s, %s, NOW(), %s, %s)
+"""
+id_reporte = conexion_db.ejecutar_consulta(insertar_reporte, (f"Reporte de {nombre_departamento}", id_departamento, "", id_usuario))
 
-        consulta_reporte = """
-        SELECT r.id_reporte, r.fecha_creacion, l.id_usuario, l.usuario 
-        FROM reporte r
-        LEFT JOIN login l ON r.id_usuario = l.id_usuario
-        WHERE r.nombre_reporte = %s
-        ORDER BY r.id_reporte DESC LIMIT 1
-        """
-        reporte = conexion_db.consultar_datos(consulta_reporte, (f"Reporte de {nombre_departamento}",))
+# 2. Ahora consultar el reporte por id, no por nombre
+consulta_reporte = """
+SELECT r.id_reporte, r.fecha_creacion, l.id_usuario, l.usuario 
+FROM reporte r
+LEFT JOIN login l ON r.id_usuario = l.id_usuario
+WHERE r.id_reporte = %s
+"""
+reporte = conexion_db.consultar_datos(consulta_reporte, (id_reporte,))
         
         print("ID del usuario:", id_usuario)  # Verifica que id_usuario no sea None o ''
         
-        if reporte:
-            id_reporte = reporte[0]['id_reporte']
-            fecha_creacion = reporte[0]['fecha_creacion'].strftime('%d/%m/%Y %H:%M:%S')
-            id_usuario = reporte[0]['usuario'] if reporte[0]['usuario'] else 'Usuario Desconocido'
-        else:
-            id_reporte = 'Desconocido'
-            fecha_creacion = 'Desconocida'
-            id_usuario = 'Desconocido'
+if reporte:
+    id_reporte = reporte[0]['id_reporte']
+    fecha_creacion = reporte[0]['fecha_creacion'].strftime('%d/%m/%Y %H:%M:%S')
+    nombre_usuario = reporte[0]['usuario'] if reporte[0]['usuario'] else 'Usuario Desconocido'
+else:
+    id_reporte = 'Desconocido'
+    fecha_creacion = 'Desconocida'
+    nombre_usuario = 'Desconocido'
+
+# Actualizar la ruta del archivo PDF final
+actualizar_ruta_archivo = """
+UPDATE reporte SET ruta_archivo = %s WHERE id_reporte = %s
+"""
+conexion_db.ejecutar_consulta(actualizar_ruta_archivo, (pdf_output, id_reporte))
 
         pdf.set_font('Helvetica', 'B', 12)
         pdf.cell(0, 10, f"Generado por: {id_usuario}", ln=True, align='L')  # Mostrar el usuario en el PDF
